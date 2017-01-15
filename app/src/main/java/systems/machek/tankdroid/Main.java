@@ -23,5 +23,11 @@ public class Main extends AppCompatActivity {
         Intent intent = new Intent(this, FullScreenCockpitH264.class);
         startActivity(intent);
     }
+
+    public void launchTabbedCockpit(View view) {
+        Intent intent = new Intent(this, ScrollableCockpit.class);
+        startActivity(intent);
+    }
+
 }
 

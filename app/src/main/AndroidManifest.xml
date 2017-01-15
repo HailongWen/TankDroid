@@ -22,7 +22,8 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_full_screen_cockpit_h264"
             android:theme="@style/FullscreenTheme" />
-        <activity android:name=".FullScreenCockpit"></activity>
+        <activity android:name=".FullScreenCockpit" />
+        <activity android:name=".ScrollableCockpit"></activity>
     </application>
 
 </manifest>
