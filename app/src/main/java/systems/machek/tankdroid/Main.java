@@ -25,9 +25,13 @@ public class Main extends AppCompatActivity {
     }
 
     public void launchTabbedCockpit(View view) {
-        Intent intent = new Intent(this, ScrollableCockpit.class);
+        Intent intent = new Intent(this, CockpitTabbed.class);
         startActivity(intent);
     }
 
+    public void launchTest(View view) {
+        Intent intent = new Intent(this, Test.class);
+        startActivity(intent);
+    }
 }
 

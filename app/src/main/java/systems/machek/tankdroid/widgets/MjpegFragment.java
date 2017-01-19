@@ -3,10 +3,12 @@ package systems.machek.tankdroid.widgets;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.github.niqdev.mjpeg.DisplayMode;
 import com.github.niqdev.mjpeg.Mjpeg;
@@ -15,14 +17,6 @@ import com.github.niqdev.mjpeg.MjpegView;
 import systems.machek.tankdroid.R;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link MjpegFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link MjpegFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class MjpegFragment extends Fragment {
 
     private String url;
@@ -30,17 +24,8 @@ public class MjpegFragment extends Fragment {
     private MjpegView mjpegView;
 
 
-    public MjpegFragment() {
-        // Required empty public constructor
-    }
+    public MjpegFragment() { }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment MjpegFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static MjpegFragment newInstance() {
         MjpegFragment fragment = new MjpegFragment();
         Bundle args = new Bundle();
@@ -75,7 +60,7 @@ public class MjpegFragment extends Fragment {
                 .subscribe(inputStream -> {
                     mjpegView.setSource(inputStream);
                     mjpegView.setDisplayMode(DisplayMode.BEST_FIT);
-                    mjpegView.showFps(true);
+                    mjpegView.showFps(false);
                 });
     }
 }
