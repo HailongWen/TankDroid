@@ -13,24 +13,13 @@ public class Main extends AppCompatActivity {
         setContentView(R.layout.activity_main);
      }
 
-    public void launchFullScreen(View view) {
-        Intent intent = new Intent(this, FullScreenCockpit.class);
-        startActivity(intent);
-    }
-
-
-    public void launchFullScreenH264(View view) {
-        Intent intent = new Intent(this, FullScreenCockpitH264.class);
-        startActivity(intent);
-    }
-
     public void launchTabbedCockpit(View view) {
-        Intent intent = new Intent(this, CockpitTabbed.class);
+        Intent intent = new Intent(this, LiveCockpit.class);
         startActivity(intent);
     }
 
-    public void launchTest(View view) {
-        Intent intent = new Intent(this, Test.class);
+    public void launchConfiguration(View view) {
+        Intent intent = new Intent(this, TankConfiguration.class);
         startActivity(intent);
     }
 }

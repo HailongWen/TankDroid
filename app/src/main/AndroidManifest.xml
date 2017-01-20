@@ -18,20 +18,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".FullScreenCockpitH264"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_full_screen_cockpit_h264"
-            android:theme="@style/FullscreenTheme" />
-        <activity android:name=".FullScreenCockpit" />
-        <activity android:name=".Cockpit" />
-        <activity
-            android:name=".CockpitTabbed"
+            android:name=".LiveCockpit"
             android:label="@string/title_activity_cockpit_tabbed"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity
-            android:name=".Test"
-            android:label="@string/title_activity_test"
-            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
+        <activity android:name=".TankConfiguration"></activity>
     </application>
 
 </manifest>
