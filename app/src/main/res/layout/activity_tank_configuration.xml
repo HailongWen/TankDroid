@@ -48,4 +48,13 @@
         android:layout_alignParentEnd="true"
         android:id="@+id/pingButton"
         android:onClick="pingTest" />
+
+    <Button
+        android:text="Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/jsonTestButton"
+        android:layout_below="@+id/pingButton"
+        android:layout_alignParentEnd="true"
+        android:onClick="jsonTest" />
 </RelativeLayout>

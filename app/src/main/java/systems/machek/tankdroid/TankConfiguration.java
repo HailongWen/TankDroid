@@ -10,11 +10,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.net.Socket;
 import java.net.UnknownHostException;
 
+import systems.machek.tankdroid.systems.machek.tankdroid.network.JsonSender;
 import systems.machek.tankdroid.systems.machek.tankdroid.network.PingChecker;
 
 public class TankConfiguration extends AppCompatActivity {
@@ -57,6 +63,33 @@ public class TankConfiguration extends AppCompatActivity {
         } else {
             alertDialog("OK", "Host is reachable");
 
+        }
+    }
+
+    public void jsonTest(View view) {
+        JSONObject command = new JSONObject();
+        try {
+            command.put("method", "test");
+            String json = command.toString();
+
+            JsonSender sender = new JsonSender(ipAddressView.getText().toString(), json);
+
+            Thread t = new Thread(sender);
+            t.start();
+            t.join();
+
+            if (sender.isAllWentFine()) {
+                alertDialog("JSON Test OK", "Your tank says: " + sender.getResult());
+            } else {
+                alertDialog("JSON Test FAILED", "Error: " + sender.getErrorMessage());
+            }
+
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 

@@ -17,4 +17,5 @@ public class Constants {
 
     public static final String PREF_FILE_NAME = "tankprefs";
 
+    public static final int JSON_TCP_PORT = 6789;
 }
