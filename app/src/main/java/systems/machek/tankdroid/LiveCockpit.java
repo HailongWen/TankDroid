@@ -43,8 +43,8 @@ public class LiveCockpit extends AppCompatActivity {
             String ip = getSharedPreferences(Constants.PREF_FILE_NAME, Context.MODE_PRIVATE).getString(Constants.CONFIG_IP_ADDRESS, Constants.DEFAULT_IP_ADDRESS);
 
             switch (position) {
-                case 0: return MjpegFragment.newInstance(Constants.FRONT_MJPEG_CAM_URL, Constants.FRONT_MJPEG_CAM_NAME.replace("xxipxx", ip));
-                case 1: return MjpegFragment.newInstance(Constants.FRONT_MJPEG_CAM_URL, Constants.TURRET_MJPEG_CAM_NAME.replace("xxipxx", ip));
+                case 0: return MjpegFragment.newInstance(Constants.FRONT_MJPEG_CAM_URL.replace("xxipxx", ip), Constants.FRONT_MJPEG_CAM_NAME);
+                case 1: return MjpegFragment.newInstance(Constants.FRONT_MJPEG_CAM_URL.replace("xxipxx", ip), Constants.TURRET_MJPEG_CAM_NAME);
             }
 
             return null;
