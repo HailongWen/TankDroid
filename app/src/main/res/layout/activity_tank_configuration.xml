@@ -50,11 +50,20 @@
         android:onClick="pingTest" />
 
     <Button
-        android:text="Button"
+        android:text="JSON"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/jsonTestButton"
         android:layout_below="@+id/pingButton"
         android:layout_alignParentEnd="true"
         android:onClick="jsonTest" />
+
+    <Button
+        android:text="Move"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/jsonTestButton"
+        android:layout_alignStart="@+id/jsonTestButton"
+        android:id="@+id/button5"
+        android:onClick="moveTest" />
 </RelativeLayout>

@@ -93,6 +93,41 @@ public class TankConfiguration extends AppCompatActivity {
         }
     }
 
+    public void moveTest(View view) {
+        JSONObject command = new JSONObject();
+        JSONObject args = new JSONObject();
+        try {
+            command.put("method", "move");
+
+            args.put("move_l", 0);
+            args.put("move_r", 0);
+            args.put("move_t", 0);
+
+            command.put("params", args);
+
+            String json = command.toString();
+
+            JsonSender sender = new JsonSender(ipAddressView.getText().toString(), json);
+
+            Thread t = new Thread(sender);
+            t.start();
+            t.join();
+
+            if (sender.isAllWentFine()) {
+                alertDialog("JSON Test OK", "Your tank says: " + sender.getResult());
+            } else {
+                alertDialog("JSON Test FAILED", "Error: " + sender.getErrorMessage());
+            }
+
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void alertDialog(String title, String msg) {
         AlertDialog alertDialog = new AlertDialog.Builder(TankConfiguration.this).create();
         alertDialog.setTitle(title);

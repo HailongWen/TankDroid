@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.ConnectException;
 import java.net.Socket;
 
 import systems.machek.tankdroid.Constants;
@@ -16,6 +17,7 @@ import systems.machek.tankdroid.Constants;
  */
 
 public class JsonSender implements Runnable {
+
     private String ip, command;
 
     private String result, errorMessage;
@@ -79,4 +81,5 @@ public class JsonSender implements Runnable {
     public boolean isAllWentFine() {
         return allWentFine;
     }
+
 }
