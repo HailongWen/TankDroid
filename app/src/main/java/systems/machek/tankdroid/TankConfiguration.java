@@ -3,7 +3,6 @@ package systems.machek.tankdroid;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.security.keystore.UserNotAuthenticatedException;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,14 +12,7 @@ import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.net.Inet4Address;
-import java.net.InetAddress;
-import java.net.Socket;
-import java.net.UnknownHostException;
-
-import systems.machek.tankdroid.systems.machek.tankdroid.network.JsonSender;
+import systems.machek.tankdroid.systems.machek.tankdroid.network.JsonTester;
 import systems.machek.tankdroid.systems.machek.tankdroid.network.PingChecker;
 
 public class TankConfiguration extends AppCompatActivity {
@@ -72,7 +64,7 @@ public class TankConfiguration extends AppCompatActivity {
             command.put("method", "test");
             String json = command.toString();
 
-            JsonSender sender = new JsonSender(ipAddressView.getText().toString(), json);
+            JsonTester sender = new JsonTester(ipAddressView.getText().toString(), json);
 
             Thread t = new Thread(sender);
             t.start();
@@ -107,7 +99,7 @@ public class TankConfiguration extends AppCompatActivity {
 
             String json = command.toString();
 
-            JsonSender sender = new JsonSender(ipAddressView.getText().toString(), json);
+            JsonTester sender = new JsonTester(ipAddressView.getText().toString(), json);
 
             Thread t = new Thread(sender);
             t.start();

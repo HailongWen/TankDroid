@@ -16,14 +16,14 @@ import systems.machek.tankdroid.Constants;
  * Created by bm on 21.01.2017.
  */
 
-public class JsonSender implements Runnable {
+public class JsonTester implements Runnable {
 
     private String ip, command;
 
     private String result, errorMessage;
     private boolean allWentFine = true;
 
-    public JsonSender(String ip, String command) {
+    public JsonTester(String ip, String command) {
         this.ip = ip;
         this.command = command;
     }

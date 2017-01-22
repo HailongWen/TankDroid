@@ -1,7 +1,6 @@
 package systems.machek.tankdroid;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 
 import android.support.v4.app.Fragment;
@@ -15,25 +14,36 @@ import android.view.MotionEvent;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import systems.machek.tankdroid.systems.machek.tankdroid.network.JsonSender;
+import systems.machek.tankdroid.systems.machek.tankdroid.network.JsonTester;
+import systems.machek.tankdroid.systems.machek.tankdroid.network.TankController;
 import systems.machek.tankdroid.widgets.MjpegFragment;
 
 public class LiveCockpit extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
-
     private ViewPager mViewPager;
+
+    private TankController tankController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_live_cockpit);
-
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        tankController = new TankController(getSharedPreferences(Constants.PREF_FILE_NAME, Context.MODE_PRIVATE).getString(Constants.CONFIG_IP_ADDRESS, Constants.DEFAULT_IP_ADDRESS));
+
+
+        try {
+            Thread t = new Thread(tankController);
+            t.start();
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -76,8 +86,7 @@ public class LiveCockpit extends AppCompatActivity {
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-
-        return true;
+        return super.dispatchKeyEvent(event);
     }
 
     @Override
@@ -103,10 +112,11 @@ public class LiveCockpit extends AppCompatActivity {
         }
 
 
-        JsonSender command = new JsonSender(ip, json.toString());
-        Thread t = new Thread(command);
-        t.start();
-
+        try {
+            String result = tankController.sendCommand(json.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
         return true;
