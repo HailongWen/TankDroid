@@ -14,8 +14,6 @@ import android.view.MotionEvent;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import systems.machek.tankdroid.systems.machek.tankdroid.network.JsonTester;
-import systems.machek.tankdroid.systems.machek.tankdroid.network.TankController;
 import systems.machek.tankdroid.widgets.MjpegFragment;
 
 public class LiveCockpit extends AppCompatActivity {

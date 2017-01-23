@@ -1,4 +1,4 @@
-package systems.machek.tankdroid.systems.machek.tankdroid.network;
+package systems.machek.tankdroid.network;
 
 import java.io.IOException;
 import java.net.InetAddress;

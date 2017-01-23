@@ -12,8 +12,8 @@ import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import systems.machek.tankdroid.systems.machek.tankdroid.network.JsonTester;
-import systems.machek.tankdroid.systems.machek.tankdroid.network.PingChecker;
+import systems.machek.tankdroid.network.JsonTester;
+import systems.machek.tankdroid.network.PingChecker;
 
 public class TankConfiguration extends AppCompatActivity {
 
