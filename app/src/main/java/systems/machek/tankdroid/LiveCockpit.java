@@ -90,11 +90,43 @@ public class LiveCockpit extends AppCompatActivity {
     @Override
     public boolean dispatchGenericMotionEvent(MotionEvent ev) {
 
+        float throttleLeft = 0.0f, throttleRight = 0.0f, turret = 0.0f;
+
         String ip = getSharedPreferences(Constants.PREF_FILE_NAME, Context.MODE_PRIVATE).getString(Constants.CONFIG_IP_ADDRESS, Constants.DEFAULT_IP_ADDRESS);
 
-        float throttleLeft = ev.getAxisValue(MotionEvent.AXIS_Y);
-        float throttleRight = ev.getAxisValue(MotionEvent.AXIS_RZ);
+        float steering = ev.getAxisValue(MotionEvent.AXIS_Z);
+        float throttle = ev.getAxisValue(MotionEvent.AXIS_Y);
+        turret = ev.getAxisValue(MotionEvent.AXIS_HAT_X);
 
+        throttleLeft = throttle - steering;
+        throttleRight = throttle + steering;
+
+        /*
+        if (steering < 0.0f) {
+            // drive left
+            if (throttleLeft < 1.0f) {
+                float delta = -throttleLeft - 1.0f;
+                throttleLeft += delta;
+                throttleRight += delta;
+
+            } else if (throttleRight > 1.0f) {
+                float delta = throttleRight - 1.0f;
+                throttleRight -= delta;
+                throttleLeft -= delta;
+            }
+        } else if (steering > 0.0f) {
+            // drive right
+            if (throttleLeft > 1.0f) {
+                float delta = throttleLeft - 1.0f;
+                throttleLeft -= delta;
+                throttleRight -= delta;
+            } else if (throttleRight < 1.0f) {
+                float delta = -throttleRight - 1.0f;
+                throttleRight += delta;
+                throttleLeft += delta;
+            }
+        }
+        */
 
         JSONObject json = new JSONObject();
 
@@ -103,7 +135,7 @@ public class LiveCockpit extends AppCompatActivity {
             JSONObject args = new JSONObject();
             args.put("move_l", throttleLeft);
             args.put("move_r", throttleRight);
-            args.put("move_t", 0.0);
+            args.put("move_t", turret);
             json.put("params", args);
         } catch (JSONException e) {
             e.printStackTrace();
