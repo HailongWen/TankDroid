@@ -66,4 +66,14 @@
         android:layout_alignStart="@+id/jsonTestButton"
         android:id="@+id/button5"
         android:onClick="moveTest" />
+
+    <Button
+        android:id="@+id/hdCamButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignStart="@+id/button5"
+        android:layout_below="@+id/button5"
+        android:onClick="startHdCam"
+        android:text="HD Cam" />
 </RelativeLayout>

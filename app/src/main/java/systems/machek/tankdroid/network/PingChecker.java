@@ -21,8 +21,7 @@ public class PingChecker implements Runnable {
     public void run() {
         try {
             InetAddress ip = InetAddress.getByName(address);
-            ip.isReachable(5000);
-            reachable = true;
+            reachable = ip.isReachable(5000);
         } catch (UnknownHostException e) {
             reachable = false;
             e.printStackTrace();

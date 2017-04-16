@@ -58,6 +58,34 @@ public class TankConfiguration extends AppCompatActivity {
         }
     }
 
+    public void startHdCam(View view) {
+        JSONObject command = new JSONObject();
+        try {
+            command.put("method", "hd_cam");
+            String json = command.toString();
+
+            JsonTester sender = new JsonTester(ipAddressView.getText().toString(), json);
+
+            Thread t = new Thread(sender);
+            t.start();
+            t.join();
+
+            if (sender.isAllWentFine()) {
+                alertDialog("JSON Test OK", "Your tank says: " + sender.getResult());
+            } else {
+                alertDialog("JSON Test FAILED", "Error: " + sender.getErrorMessage());
+            }
+
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public void jsonTest(View view) {
         JSONObject command = new JSONObject();
         try {

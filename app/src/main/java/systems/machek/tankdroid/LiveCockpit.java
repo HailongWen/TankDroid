@@ -58,7 +58,7 @@ public class LiveCockpit extends AppCompatActivity {
 
             switch (position) {
                 case 0: return MjpegFragment.newInstance(Constants.FRONT_MJPEG_CAM_URL.replace("xxipxx", ip), Constants.FRONT_MJPEG_CAM_NAME);
-                case 1: return MjpegFragment.newInstance(Constants.FRONT_MJPEG_CAM_URL.replace("xxipxx", ip), Constants.TURRET_MJPEG_CAM_NAME);
+                case 1: return MjpegFragment.newInstance(Constants.TURRET_MJPEG_CAM_URL.replace("xxipxx", ip), Constants.TURRET_MJPEG_CAM_NAME);
             }
 
             return null;
