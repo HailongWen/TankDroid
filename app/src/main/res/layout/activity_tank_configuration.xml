@@ -20,6 +20,15 @@
         android:layout_alignParentEnd="true"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/pingButton"
+        android:text="MJPEG streams"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -44,37 +53,39 @@
         android:text="Ping"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ipLabel"
-        android:layout_alignParentEnd="true"
         android:id="@+id/pingButton"
-        android:onClick="pingTest" />
+        android:onClick="pingTest"
+        android:layout_below="@+id/ipLabel"
+        android:layout_toStartOf="@+id/jsonTestButton" />
 
     <Button
         android:text="JSON"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/jsonTestButton"
+        android:onClick="jsonTest"
+        android:layout_below="@+id/ipLabel"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:id="@+id/addButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="openStreamAddDialog"
+        android:text="Add stream"
         android:layout_below="@+id/pingButton"
         android:layout_alignParentEnd="true"
-        android:onClick="jsonTest" />
+        android:layout_alignStart="@+id/pingButton" />
 
-    <Button
-        android:text="Move"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/jsonTestButton"
-        android:layout_alignStart="@+id/jsonTestButton"
-        android:id="@+id/button5"
-        android:onClick="moveTest" />
-
-    <Button
-        android:id="@+id/hdCamButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <TableLayout
+        android:id="@+id/urlListLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/saveButton"
         android:layout_alignParentEnd="true"
-        android:layout_alignStart="@+id/button5"
-        android:layout_below="@+id/button5"
-        android:enabled="false"
-        android:onClick="startHdCam"
-        android:text="HD Cam" />
+        android:layout_below="@+id/addButton"
+        android:orientation="horizontal"
+        android:visibility="visible">
+    </TableLayout>
+
 </RelativeLayout>

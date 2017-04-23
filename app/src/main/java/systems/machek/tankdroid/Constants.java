@@ -14,6 +14,7 @@ public class Constants {
 
     public static final String DEFAULT_IP_ADDRESS = "192.168.66.1";
     public static final String CONFIG_IP_ADDRESS = "ip";
+    public static final String CONFIG_MJPEG_URLS = "mjpeg_urls";
 
     public static final String PREF_FILE_NAME = "tankprefs";
 

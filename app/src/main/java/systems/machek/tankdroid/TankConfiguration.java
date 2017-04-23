@@ -6,11 +6,22 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import systems.machek.tankdroid.network.JsonTester;
 import systems.machek.tankdroid.network.PingChecker;
@@ -18,21 +29,34 @@ import systems.machek.tankdroid.network.PingChecker;
 public class TankConfiguration extends AppCompatActivity {
 
     private TextView ipAddressView;
+    private String enteredURL;
+    private Set<String> mjpegUrls;
 
+    private SharedPreferences prefs;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tank_configuration);
 
+        prefs = getSharedPreferences(Constants.PREF_FILE_NAME, Context.MODE_PRIVATE);
+
+
         ipAddressView = (TextView)findViewById(R.id.ipAddress);
-        ipAddressView.setText(getSharedPreferences(Constants.PREF_FILE_NAME, Context.MODE_PRIVATE).getString(Constants.CONFIG_IP_ADDRESS, Constants.DEFAULT_IP_ADDRESS));
+        ipAddressView.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        ipAddressView.setText(prefs.getString(Constants.CONFIG_IP_ADDRESS, Constants.DEFAULT_IP_ADDRESS));
+        mjpegUrls = new HashSet<String>(prefs.getStringSet(Constants.CONFIG_MJPEG_URLS, new HashSet<String>()));
+
+        displayMjpegUrls();
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
     }
 
 
     public void saveConfiguration(View view) {
-        SharedPreferences sharedPref = getSharedPreferences(Constants.PREF_FILE_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putStringSet(Constants.CONFIG_MJPEG_URLS, mjpegUrls);
+        editor.commit();
         editor.putString(Constants.CONFIG_IP_ADDRESS, ipAddressView.getText().toString());
         editor.commit();
     }
@@ -161,4 +185,68 @@ public class TankConfiguration extends AppCompatActivity {
         alertDialog.show();
     }
 
+
+    public void openStreamAddDialog(View v) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Enter MJPEG stream URL");
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_TEXT_VARIATION_URI);
+        input.setText("http://" + ipAddressView.getText());
+        builder.setView(input);
+
+        // Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                enteredURL = input.getText().toString();
+                addStreamURL();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
+
+    private void addStreamURL() {
+        mjpegUrls.add(enteredURL);
+        displayMjpegUrls();
+    }
+
+    public void deleteStreamURL(View v) {
+        //mjpegUrls.remove()
+    }
+
+    private void displayMjpegUrls() {
+        TableLayout l = (TableLayout) findViewById(R.id.urlListLayout);
+        TableLayout.LayoutParams p = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.MATCH_PARENT);
+
+        l.removeAllViews();
+
+        for (String url : mjpegUrls) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+
+
+            EditText urlEdit = new EditText(this);
+            urlEdit.setText(url);
+            Button deleteButton = new Button(this);
+            deleteButton.setText("Delete");
+            deleteButton.setOnClickListener((View v) -> {
+                mjpegUrls.remove(url);
+                displayMjpegUrls();
+            });
+
+            //urlEdit.setLayoutParams(p);
+            row.addView(urlEdit);
+            //deleteButton.setLayoutParams(p);
+            row.addView(deleteButton);
+
+            l.addView(row);
+        }
+    }
 }

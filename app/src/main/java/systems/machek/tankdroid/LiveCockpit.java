@@ -1,4 +1,4 @@
-package systems.machek.tankdroid;
+    package systems.machek.tankdroid;
 
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
@@ -10,9 +10,14 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.webkit.WebView;
+import android.webkit.WebViewFragment;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import systems.machek.tankdroid.widgets.MjpegFragment;
 
@@ -21,12 +26,18 @@ public class LiveCockpit extends AppCompatActivity {
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
 
+    private String[] urls;
+
     private TankController tankController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_live_cockpit);
+
+        urls = getSharedPreferences(Constants.PREF_FILE_NAME, Context.MODE_PRIVATE).getStringSet(Constants.CONFIG_MJPEG_URLS, new HashSet<String>()).toArray(new String[0]);
+
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -54,31 +65,24 @@ public class LiveCockpit extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
 
-            String ip = getSharedPreferences(Constants.PREF_FILE_NAME, Context.MODE_PRIVATE).getString(Constants.CONFIG_IP_ADDRESS, Constants.DEFAULT_IP_ADDRESS);
-
-            switch (position) {
-                case 0: return MjpegFragment.newInstance(Constants.FRONT_MJPEG_CAM_URL.replace("xxipxx", ip), Constants.FRONT_MJPEG_CAM_NAME);
-                case 1: return MjpegFragment.newInstance(Constants.TURRET_MJPEG_CAM_URL.replace("xxipxx", ip), Constants.TURRET_MJPEG_CAM_NAME);
+            if (urls.length > 0) {
+                String ip = getSharedPreferences(Constants.PREF_FILE_NAME, Context.MODE_PRIVATE).getString(Constants.CONFIG_IP_ADDRESS, Constants.DEFAULT_IP_ADDRESS);
+                return MjpegFragment.newInstance(urls[position], urls[position]);
+            } else {
+                return new BlankFragment();
             }
-
-            return null;
 
         }
 
         @Override
         public int getCount() {
-            return 2;
+            return urls.length;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return Constants.FRONT_MJPEG_CAM_NAME;
-                case 1:
-                    return Constants.TURRET_MJPEG_CAM_NAME;
-            }
-            return null;
+            return urls[position];
+            // TODO
         }
     }
 
