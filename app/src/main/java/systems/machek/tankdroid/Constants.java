@@ -7,7 +7,7 @@ package systems.machek.tankdroid;
 public class Constants {
 
     public static final String FRONT_MJPEG_CAM_URL = "http://xxipxx:8080/?action=stream";
-    public static final String TURRET_MJPEG_CAM_URL = "http://xxipxx:8090/";
+    public static final String TURRET_MJPEG_CAM_URL = "http://xxipxx:8090/?action=stream";
 
     public static final String TURRET_MJPEG_CAM_NAME = "Turm Kamera";
     public static final String FRONT_MJPEG_CAM_NAME = "Front Kamera";

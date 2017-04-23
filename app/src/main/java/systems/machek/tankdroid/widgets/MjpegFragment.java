@@ -59,7 +59,7 @@ public class MjpegFragment extends Fragment {
                 .subscribe(inputStream -> {
                     mjpegView.setSource(inputStream);
                     mjpegView.setDisplayMode(DisplayMode.BEST_FIT);
-                    mjpegView.showFps(false);
+                    mjpegView.showFps(true);
                 });
 
         return v;
