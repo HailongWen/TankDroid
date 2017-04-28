@@ -64,4 +64,11 @@ public class MjpegFragment extends Fragment {
 
         return v;
     }
+
+    @Override
+    public void onPause() {
+        // Avoid NPE when LiveCockpit is put to background or closed.
+        mjpegView.stopPlayback();
+        super.onPause();
+    }
 }

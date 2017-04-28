@@ -2,7 +2,9 @@ package systems.machek.tankdroid;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -79,33 +81,6 @@ public class TankConfiguration extends AppCompatActivity {
         } else {
             alertDialog("OK", "Host is reachable");
 
-        }
-    }
-
-    public void startHdCam(View view) {
-        JSONObject command = new JSONObject();
-        try {
-            command.put("method", "hd_cam");
-            String json = command.toString();
-
-            JsonTester sender = new JsonTester(ipAddressView.getText().toString(), json);
-
-            Thread t = new Thread(sender);
-            t.start();
-            t.join();
-
-            if (sender.isAllWentFine()) {
-                alertDialog("JSON Test OK", "Your tank says: " + sender.getResult());
-            } else {
-                alertDialog("JSON Test FAILED", "Error: " + sender.getErrorMessage());
-            }
-
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
     }
 
@@ -217,10 +192,6 @@ public class TankConfiguration extends AppCompatActivity {
         displayMjpegUrls();
     }
 
-    public void deleteStreamURL(View v) {
-        //mjpegUrls.remove()
-    }
-
     private void displayMjpegUrls() {
         TableLayout l = (TableLayout) findViewById(R.id.urlListLayout);
         TableLayout.LayoutParams p = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.MATCH_PARENT);
@@ -247,6 +218,34 @@ public class TankConfiguration extends AppCompatActivity {
             row.addView(deleteButton);
 
             l.addView(row);
+        }
+    }
+
+    public void restartCamServices(View v) {
+
+        JSONObject command = new JSONObject();
+        try {
+            command.put("method", "restart_cams");
+            String json = command.toString();
+
+            JsonTester sender = new JsonTester(ipAddressView.getText().toString(), json);
+
+            Thread t = new Thread(sender);
+            t.start();
+            t.join();
+
+            if (sender.isAllWentFine()) {
+                alertDialog("Cam services restarted", "Your tank says: " + sender.getResult());
+            } else {
+                alertDialog("Failed to restart cam services", "Error: " + sender.getErrorMessage());
+            }
+
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 }

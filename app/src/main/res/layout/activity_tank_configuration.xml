@@ -81,11 +81,20 @@
         android:id="@+id/urlListLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/saveButton"
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/addButton"
         android:orientation="horizontal"
-        android:visibility="visible">
+        android:visibility="visible"
+        android:layout_above="@+id/camButton">
     </TableLayout>
+
+    <Button
+        android:id="@+id/camButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="restartCamServices"
+        android:text="Cam Restart"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
