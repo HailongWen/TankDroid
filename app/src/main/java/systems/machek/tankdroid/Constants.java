@@ -19,6 +19,7 @@ public class Constants {
     // SharedPreference Keys.
     public static final String CONFIG_IP_ADDRESS = "ip";
     public static final String CONFIG_MJPEG_URLS = "mjpeg_urls";
+    public static final String CONFIG_SHOW_FPS = "fps";
 
     public static final String PREF_FILE_NAME = "tankprefs";
 

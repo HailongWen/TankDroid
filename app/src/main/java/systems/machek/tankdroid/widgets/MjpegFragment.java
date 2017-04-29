@@ -21,19 +21,22 @@ public class MjpegFragment extends Fragment {
 
     private static final String URL_KEY = "url";
     private static final String CAM_KEY = "cam";
+    private static final String SHOW_FPS = "fps";
 
+    private boolean showFPS;
 
     private MjpegView mjpegView;
     private TextView desc;
 
     public MjpegFragment() { }
 
-    public static MjpegFragment newInstance(String url, String name) {
+    public static MjpegFragment newInstance(String url, String name, boolean showFPS) {
         MjpegFragment fragment = new MjpegFragment();
         Bundle args = new Bundle();
 
         args.putString(URL_KEY, url);
         args.putString(CAM_KEY, name);
+        args.putBoolean(SHOW_FPS, showFPS);
 
         fragment.setArguments(args);
         return fragment;
@@ -52,6 +55,13 @@ public class MjpegFragment extends Fragment {
         mjpegView = (MjpegView)v.findViewById(R.id.mjpegView);
         desc = (TextView)v.findViewById(R.id.desc);
 
+        startPlayback();
+
+
+        return v;
+    }
+
+    private void startPlayback() {
         desc.setText(getArguments().getString(CAM_KEY));
 
         Mjpeg.newInstance(Mjpeg.Type.DEFAULT)
@@ -59,10 +69,8 @@ public class MjpegFragment extends Fragment {
                 .subscribe(inputStream -> {
                     mjpegView.setSource(inputStream);
                     mjpegView.setDisplayMode(DisplayMode.BEST_FIT);
-                    mjpegView.showFps(true);
+                    mjpegView.showFps(getArguments().getBoolean(SHOW_FPS));
                 });
-
-        return v;
     }
 
     @Override
@@ -70,5 +78,11 @@ public class MjpegFragment extends Fragment {
         // Avoid NPE when LiveCockpit is put to background or closed.
         mjpegView.stopPlayback();
         super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        startPlayback();
+        super.onResume();
     }
 }

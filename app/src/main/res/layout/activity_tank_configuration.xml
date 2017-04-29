@@ -74,8 +74,7 @@
         android:onClick="openStreamAddDialog"
         android:text="Add stream"
         android:layout_below="@+id/pingButton"
-        android:layout_alignParentEnd="true"
-        android:layout_alignStart="@+id/pingButton" />
+        android:layout_alignParentEnd="true" />
 
     <TableLayout
         android:id="@+id/urlListLayout"
@@ -96,5 +95,14 @@
         android:text="Cam Restart"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true" />
+
+    <CheckBox
+        android:id="@+id/fpsBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/urlListLayout"
+        android:layout_toEndOf="@+id/camButton"
+        android:text="Show FPS" />
 
 </RelativeLayout>

@@ -10,21 +10,21 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
-import android.webkit.WebView;
-import android.webkit.WebViewFragment;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashSet;
-import java.util.Set;
 
+import systems.machek.tankdroid.widgets.BlankFragment;
 import systems.machek.tankdroid.widgets.MjpegFragment;
 
 public class LiveCockpit extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
+
+    private boolean showFPS;
 
     private String[] urls;
 
@@ -67,7 +67,9 @@ public class LiveCockpit extends AppCompatActivity {
 
             if (urls.length > 0) {
                 String ip = getSharedPreferences(Constants.PREF_FILE_NAME, Context.MODE_PRIVATE).getString(Constants.CONFIG_IP_ADDRESS, Constants.DEFAULT_IP_ADDRESS);
-                return MjpegFragment.newInstance(urls[position], urls[position]);
+                return MjpegFragment.newInstance(urls[position], urls[position],
+                        getSharedPreferences(Constants.PREF_FILE_NAME, Context.MODE_PRIVATE).getBoolean(Constants.CONFIG_SHOW_FPS, false)
+                );
             } else {
                 return new BlankFragment();
             }
