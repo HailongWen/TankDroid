@@ -9,4 +9,7 @@ https://github.com/bmachek/JsonTank
 
 Documentation, howto's will be released on https://machek.systems
 
+Video of first run:
 
+
+[![First run](https://img.youtube.com/vi/tGCX3vp4CJU/0.jpg)](https://www.youtube.com/watch?v=tGCX3vp4CJU "First run")
