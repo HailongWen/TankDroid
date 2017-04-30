@@ -96,13 +96,13 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true" />
 
-    <CheckBox
-        android:id="@+id/fpsBox"
+    <Button
+        android:id="@+id/rebootButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_below="@+id/urlListLayout"
         android:layout_toEndOf="@+id/camButton"
-        android:text="Show FPS" />
+        android:onClick="rebootTank"
+        android:text="Reboot" />
 
 </RelativeLayout>

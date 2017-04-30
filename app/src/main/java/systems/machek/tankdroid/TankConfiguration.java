@@ -33,7 +33,7 @@ public class TankConfiguration extends AppCompatActivity {
 
     private TextView ipAddressView;
     private String enteredURL;
-    private CheckBox fpsBox;
+    // private CheckBox fpsBox;
     private Set<String> mjpegUrls;
 
     private SharedPreferences prefs;
@@ -50,8 +50,8 @@ public class TankConfiguration extends AppCompatActivity {
         ipAddressView.setText(prefs.getString(Constants.CONFIG_IP_ADDRESS, Constants.DEFAULT_IP_ADDRESS));
         mjpegUrls = new HashSet<String>(prefs.getStringSet(Constants.CONFIG_MJPEG_URLS, new HashSet<String>()));
 
-        fpsBox = (CheckBox) findViewById(R.id.fpsBox);
-        fpsBox.setSelected(prefs.getBoolean(Constants.CONFIG_SHOW_FPS, false));
+        //fpsBox = (CheckBox) findViewById(R.id.fpsBox);
+        //fpsBox.setSelected(prefs.getBoolean(Constants.CONFIG_SHOW_FPS, false));
 
         displayMjpegUrls();
 
@@ -64,7 +64,7 @@ public class TankConfiguration extends AppCompatActivity {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putStringSet(Constants.CONFIG_MJPEG_URLS, mjpegUrls);
         editor.putString(Constants.CONFIG_IP_ADDRESS, ipAddressView.getText().toString());
-        editor.putBoolean(Constants.CONFIG_SHOW_FPS, fpsBox.isSelected());
+        // editor.putBoolean(Constants.CONFIG_SHOW_FPS, fpsBox.isSelected());
         editor.commit();
     }
 
@@ -253,4 +253,33 @@ public class TankConfiguration extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    public void rebootTank(View v) {
+
+        JSONObject command = new JSONObject();
+        try {
+            command.put("method", "reboot");
+            String json = command.toString();
+
+            JsonTester sender = new JsonTester(ipAddressView.getText().toString(), json);
+
+            Thread t = new Thread(sender);
+            t.start();
+            t.join();
+
+            if (sender.isAllWentFine()) {
+                alertDialog("Reboot initiated", "Your tank says: " + sender.getResult());
+            } else {
+                alertDialog("Failed to restart cam services", "Error: " + sender.getErrorMessage());
+            }
+
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
