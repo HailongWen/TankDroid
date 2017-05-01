@@ -64,7 +64,6 @@ public class TankConfiguration extends AppCompatActivity {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putStringSet(Constants.CONFIG_MJPEG_URLS, mjpegUrls);
         editor.putString(Constants.CONFIG_IP_ADDRESS, ipAddressView.getText().toString());
-        // editor.putBoolean(Constants.CONFIG_SHOW_FPS, fpsBox.isSelected());
         editor.commit();
     }
 

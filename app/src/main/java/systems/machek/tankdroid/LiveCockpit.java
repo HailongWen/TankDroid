@@ -107,32 +107,16 @@ public class LiveCockpit extends AppCompatActivity {
         throttleLeft = throttle - steering;
         throttleRight = throttle + steering;
 
-        /*
-        if (steering < 0.0f) {
-            // drive left
-            if (throttleLeft < 1.0f) {
-                float delta = -throttleLeft - 1.0f;
-                throttleLeft += delta;
-                throttleRight += delta;
-
-            } else if (throttleRight > 1.0f) {
-                float delta = throttleRight - 1.0f;
-                throttleRight -= delta;
-                throttleLeft -= delta;
-            }
-        } else if (steering > 0.0f) {
-            // drive right
-            if (throttleLeft > 1.0f) {
-                float delta = throttleLeft - 1.0f;
-                throttleLeft -= delta;
-                throttleRight -= delta;
-            } else if (throttleRight < 1.0f) {
-                float delta = -throttleRight - 1.0f;
-                throttleRight += delta;
-                throttleLeft += delta;
-            }
+        if (Math.abs(throttleLeft) > 1) {
+            throttleRight = throttleRight / Math.abs(throttleLeft);
+            throttleLeft  = throttleLeft / Math.abs(throttleLeft);
         }
-        */
+
+        if (Math.abs(throttleRight) > 1) {
+            throttleLeft = throttleLeft / Math.abs(throttleRight);
+            throttleRight  = throttleRight / Math.abs(throttleRight);
+        }
+
 
         JSONObject json = new JSONObject();
 
