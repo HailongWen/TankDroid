@@ -30,6 +30,8 @@ public class LiveCockpit extends AppCompatActivity {
 
     private TankController tankController;
 
+    private String ip;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +45,9 @@ public class LiveCockpit extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        tankController = new TankController(getSharedPreferences(Constants.PREF_FILE_NAME, Context.MODE_PRIVATE).getString(Constants.CONFIG_IP_ADDRESS, Constants.DEFAULT_IP_ADDRESS));
+        ip = getSharedPreferences(Constants.PREF_FILE_NAME, Context.MODE_PRIVATE).getString(Constants.CONFIG_IP_ADDRESS, Constants.DEFAULT_IP_ADDRESS);
+
+        tankController = new TankController(ip);
 
 
         try {
@@ -66,7 +70,7 @@ public class LiveCockpit extends AppCompatActivity {
         public Fragment getItem(int position) {
 
             if (urls.length > 0) {
-                String ip = getSharedPreferences(Constants.PREF_FILE_NAME, Context.MODE_PRIVATE).getString(Constants.CONFIG_IP_ADDRESS, Constants.DEFAULT_IP_ADDRESS);
+                // String ip = getSharedPreferences(Constants.PREF_FILE_NAME, Context.MODE_PRIVATE).getString(Constants.CONFIG_IP_ADDRESS, Constants.DEFAULT_IP_ADDRESS);
                 return MjpegFragment.newInstance(urls[position], urls[position],
                         getSharedPreferences(Constants.PREF_FILE_NAME, Context.MODE_PRIVATE).getBoolean(Constants.CONFIG_SHOW_FPS, false)
                 );
@@ -90,15 +94,39 @@ public class LiveCockpit extends AppCompatActivity {
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        return super.dispatchKeyEvent(event);
+
+        // String ip = getSharedPreferences(Constants.PREF_FILE_NAME, Context.MODE_PRIVATE).getString(Constants.CONFIG_IP_ADDRESS, Constants.DEFAULT_IP_ADDRESS);
+
+        if (event.getAction() == KeyEvent.ACTION_DOWN) {
+
+            JSONObject json = new JSONObject();
+
+            try {
+                json.put("method", "shoot");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+            try {
+                String result = tankController.sendCommand(json.toString());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        return true;
     }
+
+
 
     @Override
     public boolean dispatchGenericMotionEvent(MotionEvent ev) {
 
         float throttleLeft = 0.0f, throttleRight = 0.0f, turret = 0.0f;
 
-        String ip = getSharedPreferences(Constants.PREF_FILE_NAME, Context.MODE_PRIVATE).getString(Constants.CONFIG_IP_ADDRESS, Constants.DEFAULT_IP_ADDRESS);
+        // String ip = getSharedPreferences(Constants.PREF_FILE_NAME, Context.MODE_PRIVATE).getString(Constants.CONFIG_IP_ADDRESS, Constants.DEFAULT_IP_ADDRESS);
 
         float steering = ev.getAxisValue(MotionEvent.AXIS_Z);
         float throttle = ev.getAxisValue(MotionEvent.AXIS_Y);
