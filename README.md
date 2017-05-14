@@ -13,3 +13,5 @@ Video of first run:
 
 
 [![First run](https://img.youtube.com/vi/tGCX3vp4CJU/0.jpg)](https://www.youtube.com/watch?v=tGCX3vp4CJU "First run")
+
+[![Controller](https://img.youtube.com/vi/it1MiXvETtc/0.jpg)](https://www.youtube.com/watch?v=it1MiXvETtc "Controller")
